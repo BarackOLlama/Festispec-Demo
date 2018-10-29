@@ -18,11 +18,11 @@
     <Grid>
         <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button x:Name="Quiz" Content="Choose a quiz to play" Command="{Binding ShowPlayQuizzesCommand}" Template="{StaticResource MainButtonTemplate}"/>-->
-            <Button Content="Klantbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
-            <Button Content="Inspectiebeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
-            <Button Content="Evenementbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
-            <Button Content="Inspecteurbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
-            <Button Content="Offertebeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Klantbeheer (NYI)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Inspectiebeheer (NYI)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Evenementbeheer (NYI)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Inspecteurbeheer (NYI)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Offertebeheer (NYI)" Template="{StaticResource MainButtonTemplate}"/>
             <Button x:Name="EditQuizzes" Content="Vragenlijstbeheer" Command="{Binding ShowQuizManagementCommand}" Template="{StaticResource MainButtonTemplate}"/>
         </WrapPanel>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left">

@@ -33,7 +33,7 @@
 
         <StackPanel Orientation="Vertical" Width="700" Margin="50,10" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5" >
-                <TextBox Name="NewQuestionName" Background="AntiqueWhite" FontSize="12" Margin="5,0" Height="26" Width="550" HorizontalAlignment="Left"
+                <TextBox Name="NewQuestionName" Background="AntiqueWhite" FontSize="12" Height="26" Width="550" HorizontalAlignment="Left"
                          Text="{Binding NewQuestionText, Mode=TwoWay}"/>
                 <Button Content="Nieuwe vraag toevoegen" Template="{StaticResource SmallButtonTemplate}"
                         Command="{Binding AddQuestionCommand}">

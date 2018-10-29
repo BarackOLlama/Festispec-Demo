@@ -21,7 +21,9 @@ namespace Festispec.ViewModel
         public string QuestionnaireName
         {
             get { return _Questionnaire.Name; }
-            set { _Questionnaire.Name = value; }
+            set { _Questionnaire.Name = value;
+                CanExecuteChanged();
+            }
         }
         public string NewQuestionText { get; set; }
         public string NewAnswerText { get; set; }
@@ -117,6 +119,12 @@ namespace Festispec.ViewModel
 
         private bool CanSave(Window args)
         {
+            if (string.IsNullOrEmpty(QuestionnaireName))
+            {
+                WarningText = "De vragenlijst moet een naam hebben";
+                RaisePropertyChanged(nameof(WarningText));
+                return false;
+            }
             var questionList = new ObservableCollection<QuestionVM>(Questionnaire.QuestionList);
             if (questionList.Count() < 1)
             {
