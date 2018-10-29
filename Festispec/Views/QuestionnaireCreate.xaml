@@ -48,8 +48,9 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Center" Width="680">
-                <ComboBox Height="26"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="680">
+                <TextBlock Text="Type" TextAlignment="Center" FontSize="20" Margin="0,0,20,0"/>
+                <ComboBox Height="26" Width="150"
                           ItemsSource="{Binding QuestionTypes}"
                           DisplayMemberPath="Name"
                           SelectedIndex="0"
