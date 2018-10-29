@@ -1,0 +1,31 @@
+﻿<Window x:Class="Festispec.Views.ShowQuizzesToPlay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Festispec"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="Kwisspel, kies een quiz om te spelen!" Height="372.684" Width="303.321"
+        Name="ChooseQuizWindow"
+        ResizeMode="NoResize"
+        DataContext="{Binding PlayViewModel, Source={StaticResource Locator}}"
+        Topmost="True"
+        WindowStyle = "SingleBorderWindow">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Deactivated">
+            <i:InvokeCommandAction Command="{Binding WindowDeactivatedCommand}" CommandParameter="{Binding ElementName=ChooseQuizWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Background="BlueViolet">
+    
+        <DataGrid ItemsSource="{Binding Quizzes}" AutoGenerateColumns="false" IsReadOnly="True" Margin="10,10,9,45" HorizontalAlignment="Center" SelectedItem="{Binding SelectedQuiz, Mode=OneWay}" Width="224">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Naam" Width="216" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Button x:Name="Spelen" Content="Spelen" Margin="157,300,36,10" />
+        <Button x:Name="Cancel" Content="Cancel" Margin="36,300,158,10" />
+    </Grid>
+</Window>
