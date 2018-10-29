@@ -23,7 +23,7 @@
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
     </Window.Resources>
-    <StackPanel Background="BlueViolet">
+    <StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Margin="50,20,50,0">
             <TextBlock Text="Vragenlijsten" FontSize="25"></TextBlock>
             <DataGrid AutoGenerateColumns="false" Margin="0,5" HorizontalAlignment="Center" Width="700" MinHeight="50" MaxHeight="200"

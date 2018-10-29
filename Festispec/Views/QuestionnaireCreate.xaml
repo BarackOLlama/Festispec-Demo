@@ -19,7 +19,7 @@
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
     </Window.Resources>
-    <StackPanel Background="DarkSeaGreen">
+    <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="50,20,50,0">
             <TextBlock TextAlignment="Center" FontSize="20" Text="Inspectie" Margin="20,0"/>
             <TextBox Background="AntiqueWhite" Width="183" HorizontalAlignment="Left" Height="26"  Margin="20,0"
@@ -165,11 +165,11 @@
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal"  Margin="20,10">
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
-            <Button Name="SaveChanges" Content="Save changes" Template="{StaticResource SmallButtonTemplate}"
+            <Button Name="SaveChanges" Content="Opslaan" Template="{StaticResource SmallButtonTemplate}"
                     Command="{Binding SaveChangesCommand}"
                     CommandParameter="{Binding ElementName=QuestionnaireCreateName}">
             </Button>
-            <Button Name="DiscardChanges" Content="Discard changes" Template="{StaticResource SmallButtonTemplate}"
+            <Button Name="DiscardChanges" Content="Annuleren" Template="{StaticResource SmallButtonTemplate}"
                     Command="{Binding DiscardChangesCommand}"
                     CommandParameter="{Binding ElementName=QuestionnaireCreateName}"/>
         </StackPanel>

@@ -5,21 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Festispec"
         mc:Ignorable="d"
-        Title="Festispec Demo" Height="322" Width="385"
+        Title="Festispec Demo" Height="380.009" Width="873.613"
         ResizeMode="NoResize"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
         <ControlTemplate x:Key="MainButtonTemplate" TargetType="Button">
-            <Button Padding="20" FontSize="20" Margin="5"
+            <Button Padding="20" FontSize="20" Margin="5" Width="250"
                     Content="{TemplateBinding Content}"
                     Command="{TemplateBinding Command}"/>
         </ControlTemplate>
     </Window.Resources>
-    <Grid Background="BlueViolet">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid>
+        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button x:Name="Quiz" Content="Choose a quiz to play" Command="{Binding ShowPlayQuizzesCommand}" Template="{StaticResource MainButtonTemplate}"/>-->
+            <Button Content="Klantbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Inspectiebeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Evenementbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Inspecteurbeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
+            <Button Content="Offertebeheer (NIY)" Template="{StaticResource MainButtonTemplate}"/>
             <Button x:Name="EditQuizzes" Content="Vragenlijstbeheer" Command="{Binding ShowQuizManagementCommand}" Template="{StaticResource MainButtonTemplate}"/>
-        </StackPanel>
+        </WrapPanel>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left">
             <Label Content="Bithopper" FontSize="20" Canvas.Top="265"/>
         </StackPanel>
