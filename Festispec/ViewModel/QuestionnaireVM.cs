@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Festispec.ViewModel
 {
-    public class QuizVM
+    public class QuestionnaireVM
     {
-        private Quiz _q;
+        private Questionnaire _q;
 
-        public QuizVM(Quiz q)
+        public QuestionnaireVM(Questionnaire q)
         {
             _q = q;
         }
@@ -26,11 +26,11 @@ namespace Festispec.ViewModel
             }
         }
 
-        public ObservableCollection<QuestionVM> Questionnaire
+        public ObservableCollection<QuestionVM> QuestionList
         {
             get
             {
-                return new ObservableCollection<QuestionVM>(_q.Questionnaire.Select(q => new QuestionVM(q)));
+                return new ObservableCollection<QuestionVM>(_q.QuestionList.Select(q => new QuestionVM(q)));
             }
         }
 
@@ -38,11 +38,11 @@ namespace Festispec.ViewModel
         {
             get
             {
-                return _q.Questionnaire.Count;
+                return _q.QuestionList.Count;
             }
         }
 
-        public Quiz ToModel
+        public Questionnaire ToModel
         {
             get { return _q; }
         }

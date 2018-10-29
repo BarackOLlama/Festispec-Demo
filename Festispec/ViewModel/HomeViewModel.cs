@@ -15,21 +15,13 @@ namespace Festispec.ViewModel
 
         public HomeViewModel()
         {
-            ShowPlayQuizzesCommand = new RelayCommand(ShowPlayQuizzes);
             ShowQuizManagementCommand = new RelayCommand(ShowQuizManagement);
         }
-
-        public ICommand ShowPlayQuizzesCommand { get; set; }
         public ICommand ShowQuizManagementCommand { get; set; }
-
-        public void ShowPlayQuizzes()
-        {
-            new ShowQuizzesToPlay().Show();                
-        }
-
+        
         public void ShowQuizManagement()
         {
-            CommonServiceLocator.ServiceLocator.Current.GetInstance<QuizManagementViewModel>().Init();
+            CommonServiceLocator.ServiceLocator.Current.GetInstance<QuestionnaireManagementViewModel>().Init();
             new QuizManagement().Show();
         }
 

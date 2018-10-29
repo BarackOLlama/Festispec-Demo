@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Festispec
 {
-    public partial class Quiz
+    public partial class Questionnaire
     {
-        public Quiz()
+        public Questionnaire()
         {
-            Questionnaire = new HashSet<Question>();
+            QuestionList = new HashSet<Question>();
         }
 
-        public Quiz(string n, ICollection<Question> qs)
+        public Questionnaire(string n, ICollection<Question> qs)
         {
             this.Name = n;
-            this.Questionnaire = qs;
+            this.QuestionList = qs;
         }
 
         [Key]
@@ -26,6 +26,6 @@ namespace Festispec
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Question> Questionnaire { get; set; }
+        public ICollection<Question> QuestionList { get; set; }
     }
 }

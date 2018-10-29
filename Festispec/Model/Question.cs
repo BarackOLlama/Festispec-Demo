@@ -11,13 +11,11 @@ namespace Festispec
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Question()
         {
-            Quizzes = new HashSet<Quiz>();
             Answers = new HashSet<Answer>();
         }
 
         public Question(string content)
         {
-            Quizzes = new HashSet<Quiz>();
             Answers = new HashSet<Answer>();
             Content = content;
         }
@@ -29,12 +27,14 @@ namespace Festispec
         [Required]
         public string Content { get; set; }
 
-        public int CategoryId { get; set; }
+        public int QuestionTypeId { get; set; }
+
+        public int QuestionnaireId { get; set; }
         
-        public virtual ICollection<Quiz> Quizzes { get; set; }
+        public virtual Questionnaire Questionnaire { get; set; }
 
         public virtual ICollection<Answer> Answers { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual QuestionType QuestionType { get; set; }
     }
 }

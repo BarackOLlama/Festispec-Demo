@@ -27,13 +27,16 @@ namespace Festispec.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Content = c.String(nullable: false, storeType: "ntext"),
                         CategoryId = c.Int(nullable: false),
+                        QuizId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
-                .Index(t => t.CategoryId);
+                .ForeignKey("dbo.QuestionTypes", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.Questionnaires", t => t.QuizId, cascadeDelete: true)
+                .Index(t => t.CategoryId)
+                .Index(t => t.QuizId);
             
             CreateTable(
-                "dbo.Categories",
+                "dbo.QuestionTypes",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -42,7 +45,7 @@ namespace Festispec.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Quizs",
+                "dbo.Questionnaires",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -50,34 +53,18 @@ namespace Festispec.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.QuizQuestions",
-                c => new
-                    {
-                        Quiz_Id = c.Int(nullable: false),
-                        Question_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Quiz_Id, t.Question_Id })
-                .ForeignKey("dbo.Quizs", t => t.Quiz_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Questions", t => t.Question_Id, cascadeDelete: true)
-                .Index(t => t.Quiz_Id)
-                .Index(t => t.Question_Id);
-            
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.QuizQuestions", "Question_Id", "dbo.Questions");
-            DropForeignKey("dbo.QuizQuestions", "Quiz_Id", "dbo.Quizs");
-            DropForeignKey("dbo.Questions", "CategoryId", "dbo.Categories");
+            DropForeignKey("dbo.Questions", "QuizId", "dbo.Questionnaires");
+            DropForeignKey("dbo.Questions", "CategoryId", "dbo.QuestionTypes");
             DropForeignKey("dbo.Answers", "QuestionId", "dbo.Questions");
-            DropIndex("dbo.QuizQuestions", new[] { "Question_Id" });
-            DropIndex("dbo.QuizQuestions", new[] { "Quiz_Id" });
+            DropIndex("dbo.Questions", new[] { "QuizId" });
             DropIndex("dbo.Questions", new[] { "CategoryId" });
             DropIndex("dbo.Answers", new[] { "QuestionId" });
-            DropTable("dbo.QuizQuestions");
-            DropTable("dbo.Quizs");
-            DropTable("dbo.Categories");
+            DropTable("dbo.Questionnaires");
+            DropTable("dbo.QuestionTypes");
             DropTable("dbo.Questions");
             DropTable("dbo.Answers");
         }

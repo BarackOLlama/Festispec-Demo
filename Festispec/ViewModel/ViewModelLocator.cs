@@ -43,9 +43,8 @@ namespace Festispec.ViewModel
             ////}
 
             SimpleIoc.Default.Register<HomeViewModel>();
-            SimpleIoc.Default.Register<QuizManagementViewModel>(true);
+            SimpleIoc.Default.Register<QuestionnaireManagementViewModel>(true);
             SimpleIoc.Default.Register<QuestionnaireCreateViewModel>(true);
-            SimpleIoc.Default.Register<ShowQuizzesToPlayViewModel>(true);
         }
 
         public HomeViewModel Main
@@ -56,19 +55,11 @@ namespace Festispec.ViewModel
             }
         }
 
-        public ShowQuizzesToPlayViewModel PlayViewModel
+        public QuestionnaireManagementViewModel QuestionnaireManagement
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ShowQuizzesToPlayViewModel>();
-            }
-        }
-
-        public QuizManagementViewModel QuizManagement
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<QuizManagementViewModel>();
+                return ServiceLocator.Current.GetInstance<QuestionnaireManagementViewModel>();
             }
         }
 

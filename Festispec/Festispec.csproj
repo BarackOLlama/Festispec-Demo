@@ -82,38 +82,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\201810250349192_Initial.cs" />
-    <Compile Include="Migrations\201810250349192_Initial.Designer.cs">
-      <DependentUpon>201810250349192_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201810291114005_Initial.cs" />
+    <Compile Include="Migrations\201810291114005_Initial.Designer.cs">
+      <DependentUpon>201810291114005_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291139141_Update-12_38.cs" />
+    <Compile Include="Migrations\201810291139141_Update-12_38.Designer.cs">
+      <DependentUpon>201810291139141_Update-12_38.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Answer.cs" />
-    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\QuestionType.cs" />
     <Compile Include="FestispecContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Question.cs" />
-    <Compile Include="Model\Quiz.cs" />
+    <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="ViewModel\AnswerVM.cs" />
-    <Compile Include="ViewModel\CategoryVM.cs" />
-    <Compile Include="ViewModel\ShowQuizzesToPlayViewModel.cs" />
+    <Compile Include="ViewModel\QuestionTypeVM.cs" />
     <Compile Include="ViewModel\QuestionnaireCreateViewModel.cs" />
     <Compile Include="ViewModel\QuestionVM.cs" />
-    <Compile Include="ViewModel\QuizManagementViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
-    <Compile Include="ViewModel\QuizVM.cs" />
+    <Compile Include="ViewModel\QuestionnaireVM.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\ShowQuizzesToPlay.xaml.cs">
-      <DependentUpon>ShowQuizzesToPlay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\QuestionnaireCreate.xaml.cs">
       <DependentUpon>QuestionnaireCreate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\QuizManagement.xaml.cs">
-      <DependentUpon>QuizManagement.xaml</DependentUpon>
+    <Compile Include="Views\QuestionnaireManagement.xaml.cs">
+      <DependentUpon>QuestionnaireManagement.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\ShowQuizzesToPlay.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -130,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\QuizManagement.xaml">
+    <Page Include="Views\QuestionnaireManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,8 +145,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201810250349192_Initial.resx">
-      <DependentUpon>201810250349192_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810291114005_Initial.resx">
+      <DependentUpon>201810291114005_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291139141_Update-12_38.resx">
+      <DependentUpon>201810291139141_Update-12_38.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

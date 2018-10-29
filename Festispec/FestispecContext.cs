@@ -14,9 +14,9 @@ namespace Festispec
         }
 
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<QuestionType> QuestionTypes { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Quiz> Quizzes { get; set; }
+        public virtual DbSet<Questionnaire> Questionnaires { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

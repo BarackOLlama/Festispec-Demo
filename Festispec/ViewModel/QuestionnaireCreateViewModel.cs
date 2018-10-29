@@ -11,128 +11,236 @@ namespace Festispec.ViewModel
 {
     public class QuestionnaireCreateViewModel : ViewModelBase
     {
-        private int QuizId;
-        public QuizVM Quiz { get; set; }
+        private int QuestionnaireId;
+        private QuestionnaireVM _Questionnaire;
+        public QuestionnaireVM Questionnaire
+        {
+            get { return _Questionnaire; }
+            set { _Questionnaire = value ?? _Questionnaire; }
+        }
+        public string QuestionnaireName
+        {
+            get { return Questionnaire.Name; }
+            set { Questionnaire.Name = value; CanExecuteChanged(); }
+        }
         public string NewQuestionText { get; set; }
+        public string NewAnswerText { get; set; }
+        public QuestionTypeVM SelectedType { get; set; }
+        public QuestionVM SelectedQuestion { get; set; }
+        public string WarningText { get; set; }
         public ObservableCollection<AnswerVM> Answers { get; set; }
-        public ObservableCollection<CategoryVM> Categories { get; set; }
+        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
 
-        private QuizVM _BackupQuizState { get; set; }
+        private QuestionnaireVM _BackupQuestionnaireState { get; set; }
 
         private FestispecContext _Context;
+
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
+        public RelayCommand<Window> DiscardChangesCommand { get; set; }
+        public RelayCommand AddQuestionCommand { get; set; }
+        public RelayCommand AddAnswerCommand { get; set; }
+        public RelayCommand GetAnswersCommand { get; set; }
+        public RelayCommand<object> DeleteRowCommand { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the QuizManagementViewModel class.
         /// </summary>
         public QuestionnaireCreateViewModel()
         {
-            QuizId = -1;
-            Messenger.Default.Register<int>(this, "QuizManagementToQuizView", x => QuizId = x);
+            QuestionnaireId = -1;
+            Messenger.Default.Register<int>(this, "QuizManagementToQuizView", x => QuestionnaireId = x);
 
             // Setup relay commands
-            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges, CanSave);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
-            AddQuestionCommand = new RelayCommand<string>(AddQuestion);
-            GetAnswersCommand = new RelayCommand<QuestionVM>(GetAnswers);
+            AddQuestionCommand = new RelayCommand(AddQuestion);
+            AddAnswerCommand = new RelayCommand(AddAnswer, CanAddAnswer);
+            GetAnswersCommand = new RelayCommand(GetAnswers);
             DeleteRowCommand = new RelayCommand<object>(DeleteRow);
+        }
+
+        internal void Init()
+        {
+            _Context = new FestispecContext();
+            if (QuestionnaireId != -1)
+            {
+                Questionnaire = _Context.Questionnaires
+                    .Include(nameof(Questionnaire.QuestionList))
+                    .Where(q => q.Id == QuestionnaireId)
+                    .ToList()
+                    .Select(q => new QuestionnaireVM(q))
+                    .FirstOrDefault();
+                CanExecuteChanged();
+            }
+            else
+            {
+                Questionnaire = new QuestionnaireVM(new Questionnaire());
+                _Context.Questionnaires.Add(Questionnaire.ToModel);
+                Answers = new ObservableCollection<AnswerVM>();
+                CanExecuteChanged();
+            }
+
+            var questiontypes = _Context.QuestionTypes
+                .ToList()
+                .Select(c => new QuestionTypeVM(c));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(questiontypes);
+        }
+
+        private void CanExecuteChanged()
+        {
+            SaveChangesCommand.RaiseCanExecuteChanged();
+            AddAnswerCommand.RaiseCanExecuteChanged();
         }
 
         private void CloseAction(Window window)
         {
-            _Context.Dispose();
+            SelectedQuestion = null;
+            NewQuestionText = "";
+            NewAnswerText = "";
             window.Close();
         }
 
         private void SaveChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to save these changes?",
-                "Confirm save",
+            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt opslaan?",
+                "Opslaan bevestigen",
                 MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 _Context.SaveChanges();
-                CommonServiceLocator.ServiceLocator.Current.GetInstance<QuizManagementViewModel>().Init(_Context);
+                CommonServiceLocator.ServiceLocator.Current.GetInstance<QuestionnaireManagementViewModel>().Init(_Context);
+                Messenger.Default.Send(_Context, "SendContext");
                 CloseAction(window);
             }
+        }
+
+        private bool CanSave(Window args)
+        {
+            if (string.IsNullOrEmpty(Questionnaire.Name))
+            {
+                WarningText = "De vragenlijst moet een naam hebben";
+                RaisePropertyChanged(nameof(WarningText));
+                return false;
+            }
+            var questionList = new ObservableCollection<QuestionVM>(Questionnaire.QuestionList);
+            if (questionList.Count() < 1)
+            {
+                WarningText = "De vragenlijst moet minstens één naam hebben";
+                RaisePropertyChanged(nameof(WarningText));
+                return false;
+            }
+            foreach (QuestionVM q in questionList)
+            {
+                if (q.Answers.Count < 2)
+                {
+                    WarningText = "Multiple choice-vragen moeten minstens twee antwoorden hebben";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+            }
+            WarningText = "";
+            RaisePropertyChanged(nameof(WarningText));
+            return true;
         }
 
         private void DiscardChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to close without saving?",
-                "Confirm discard",
+            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt afsluiten zonder op te slaan?",
+                "Afsluiten bevestigen",
                 MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+                _Context.Dispose();
                 CloseAction(window);
             }
         }
 
-        public RelayCommand<Window> SaveChangesCommand { get; set; }
-        public RelayCommand<Window> DiscardChangesCommand { get; set; }
-        public RelayCommand<string> AddQuestionCommand { get; set; }
-        public RelayCommand<QuestionVM> GetAnswersCommand { get; set; }
-        public RelayCommand<object> DeleteRowCommand { get; set; }
-
-        internal void Init()
+        private void AddQuestion()
         {
-            _Context = new FestispecContext();
-            if (QuizId != -1)
+            var questionType = _Context.QuestionTypes.FirstOrDefault(c => c.Id == SelectedType.Id);
+            var newQuestion = new QuestionVM(new Question
             {
-                Quiz = _Context.Quizzes
-                    .Include(nameof(Quiz.Questionnaire))
-                    .Where(q => q.Id == QuizId)
-                    .ToList()
-                    .Select(q => new QuizVM(q))
-                    .FirstOrDefault();
-            }
-            else
-            {
-                Quiz = new QuizVM(new Quiz());
-                _Context.Quizzes.Add(Quiz.ToModel);
-            }
+                Content = NewQuestionText,
+                QuestionType = questionType
+            });
 
-            var categories = _Context.Categories
-                .ToList()
-                .Select(c => new CategoryVM(c));
-            Categories = new ObservableCollection<CategoryVM>(categories);
-        }
+            _Context.Questions.Add(newQuestion.ToModel);
 
-        private void AddQuestion(string questionContent)
-        {
+            Questionnaire.ToModel.QuestionList.Add(newQuestion.ToModel);
+            Questionnaire.QuestionList.Add(newQuestion);
+            RaisePropertyChanged(nameof(Questionnaire));            
+
             NewQuestionText = "";
             RaisePropertyChanged(nameof(NewQuestionText));
-            var newQuestion = new QuestionVM(new Question(questionContent));
-            Quiz.Questionnaire.Add(newQuestion);
-            _Context.Questions.Add(newQuestion.ToModel);
-            RaisePropertyChanged(nameof(Quiz.Questionnaire));
+
+            CanExecuteChanged();
         }
 
-        private void GetAnswers(QuestionVM question)
+        private void AddAnswer()
         {
-            if (question != null)
+            var newAnswer = new AnswerVM(new Answer
             {
-                var answers = _Context.Answers
-                    .Where(a => a.QuestionId == question.Id)
-                    .ToList()
-                    .Select(a => new AnswerVM(a));
-                Answers = new ObservableCollection<AnswerVM>(answers);
+                Content = NewAnswerText,
+                Correct = false,
+                Question = SelectedQuestion.ToModel
+            });
+
+            _Context.Answers.Add(newAnswer.ToModel);
+
+            SelectedQuestion.ToModel.Answers.Add(newAnswer.ToModel);
+            SelectedQuestion.Answers.Add(newAnswer);
+            Answers.Add(newAnswer);
+            var temp = SelectedQuestion;
+            RaisePropertyChanged(nameof(Questionnaire));
+            SelectedQuestion = Questionnaire.QuestionList.FirstOrDefault(q => q.Id == temp.Id);
+
+            NewAnswerText = "";
+            RaisePropertyChanged(nameof(NewAnswerText));
+
+            GetAnswers();
+            CanExecuteChanged();
+        }
+
+        private bool CanAddAnswer()
+        {
+            return SelectedQuestion != null;
+        }
+
+        private void GetAnswers()
+        {
+            if (SelectedQuestion != null)
+            {
+                //var answers = _Context.Answers
+                //    .Where(a => a.QuestionId == SelectedQuestion.Id)
+                //    .ToList()
+                //    .Select(a => new AnswerVM(a));
+                // Answers = new ObservableCollection<AnswerVM>(answers);
+                Answers = SelectedQuestion.Answers;
                 RaisePropertyChanged(nameof(Answers));
             }
+            CanExecuteChanged();
         }
 
         private void DeleteRow(object row)
         {
             if (row is QuestionVM question)
             {
-                _Context.Questions.Remove(question.ToModel);
-                Quiz.Questionnaire.Remove(question);
-                RaisePropertyChanged(nameof(Quiz));
+                //_Context.Questions.Remove(question.ToModel);
+                Questionnaire.QuestionList.Remove(Questionnaire.QuestionList.Where(q => q.Id == question.Id).Single());
+                Questionnaire.ToModel.QuestionList.Remove(question.ToModel);
+                RaisePropertyChanged(nameof(Questionnaire));
+                //AllQuestions.Remove(AllQuestions.Where(q=>q.Id == question.Id).Single());
+                //RaisePropertyChanged(nameof(AllQuestions));
+                Answers.Clear();
             }
             else if (row is AnswerVM answer)
             {
                 _Context.Answers.Remove(answer.ToModel);
                 Answers.Remove(answer);
+                RaisePropertyChanged(nameof(Questionnaire));
             }
+
+            CanExecuteChanged();
         }
     }
 }

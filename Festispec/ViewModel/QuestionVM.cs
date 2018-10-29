@@ -23,14 +23,19 @@ namespace Festispec.ViewModel
             set { _q.Content = value; }
         }
 
-        public ObservableCollection<Answer> Answers
+        public ObservableCollection<AnswerVM> Answers
         {
-            get { return new ObservableCollection<Answer>(_q.Answers.Select(a => a)); }
+            get { return new ObservableCollection<AnswerVM>(_q.Answers.Select(a => new AnswerVM(a))); }
         }
 
         public int AnswerCount
         {
             get { return Answers.Count; }
+        }
+
+        public string Category
+        {
+            get { return _q.QuestionType.Name; }
         }
 
         public Question ToModel
