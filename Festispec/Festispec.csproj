@@ -90,12 +90,29 @@
     <Compile Include="Migrations\201810291139141_Update-12_38.Designer.cs">
       <DependentUpon>201810291139141_Update-12_38.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810291248241_Update-13_48.cs" />
+    <Compile Include="Migrations\201810291248241_Update-13_48.Designer.cs">
+      <DependentUpon>201810291248241_Update-13_48.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291302275_Update-14_02.cs" />
+    <Compile Include="Migrations\201810291302275_Update-14_02.Designer.cs">
+      <DependentUpon>201810291302275_Update-14_02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291306579_Update-14_06.cs" />
+    <Compile Include="Migrations\201810291306579_Update-14_06.Designer.cs">
+      <DependentUpon>201810291306579_Update-14_06.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291338251_Update-14_38.cs" />
+    <Compile Include="Migrations\201810291338251_Update-14_38.Designer.cs">
+      <DependentUpon>201810291338251_Update-14_38.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\QuestionType.cs" />
     <Compile Include="FestispecContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Questionnaire.cs" />
+    <Compile Include="NullToVisibleConverter.cs" />
     <Compile Include="ViewModel\AnswerVM.cs" />
     <Compile Include="ViewModel\QuestionTypeVM.cs" />
     <Compile Include="ViewModel\QuestionnaireCreateViewModel.cs" />
@@ -150,6 +167,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810291139141_Update-12_38.resx">
       <DependentUpon>201810291139141_Update-12_38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291248241_Update-13_48.resx">
+      <DependentUpon>201810291248241_Update-13_48.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291302275_Update-14_02.resx">
+      <DependentUpon>201810291302275_Update-14_02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291306579_Update-14_06.resx">
+      <DependentUpon>201810291306579_Update-14_06.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291338251_Update-14_38.resx">
+      <DependentUpon>201810291338251_Update-14_38.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -15,12 +15,6 @@
             set { _answer.Content = value; }
         }
 
-        public bool IsCorrect
-        {
-            get { return _answer.Correct; }
-            set { _answer.Correct = value; }
-        }
-
         public Answer ToModel
         {
             get { return _answer; }

@@ -14,17 +14,14 @@ namespace Festispec
             QuestionList = new HashSet<Question>();
         }
 
-        public Questionnaire(string n, ICollection<Question> qs)
-        {
-            this.Name = n;
-            this.QuestionList = qs;
-        }
-
         [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
+
+        public int InspectionId { get; set; }
+
+        public string Instructions { get; set; }
 
         public ICollection<Question> QuestionList { get; set; }
     }

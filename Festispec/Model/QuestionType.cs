@@ -18,7 +18,7 @@ namespace Festispec
         public int Id { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(20)]
         public string Name { get; set; }
     }
 }

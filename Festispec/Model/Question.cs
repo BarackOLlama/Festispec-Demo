@@ -30,6 +30,10 @@ namespace Festispec
         public int QuestionTypeId { get; set; }
 
         public int QuestionnaireId { get; set; }
+
+        public string Options { get; set; }
+
+        public string Columns { get; set; }
         
         public virtual Questionnaire Questionnaire { get; set; }
 

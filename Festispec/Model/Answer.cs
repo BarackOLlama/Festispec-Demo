@@ -16,9 +16,6 @@ namespace Festispec
         public string Content { get; set; }
 
         [Required]
-        public bool Correct { get; set; }
-
-        [Required]
         public int QuestionId { get; set; }
 
         public virtual Question Question { get; set; }

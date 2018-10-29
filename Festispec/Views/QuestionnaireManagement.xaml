@@ -27,11 +27,13 @@
         <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Margin="50,20,50,0">
             <TextBlock Text="Vragenlijsten" FontSize="25"></TextBlock>
             <DataGrid AutoGenerateColumns="false" Margin="0,5" HorizontalAlignment="Center" Width="700" MinHeight="50" MaxHeight="200"
-                      ItemsSource="{Binding Questionnaires}"
+                      ItemsSource="{Binding Questionnnaires}"
                       SelectedItem="{Binding SelectedQuestionnaire, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Amount of questions" Binding="{Binding QuestionCount}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Naam" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Aantal vragen" Binding="{Binding QuestionCount}" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header=""  Width="*" IsReadOnly="True"></DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.CellStyle>
@@ -66,8 +68,8 @@
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Right" Margin="50,5,50,0" Orientation="Horizontal" >
-            <Button Name="DeleteQuiz" Content="Verwijderen" Command="{Binding DeleteRowCommand}" CommandParameter="{Binding SelectedQuiz}" Template="{StaticResource SmallButtonTemplate}"></Button>
-            <Button Name="EditQuiz" Content="Bewerken" Command="{Binding EditQuestionnaireCommand}" CommandParameter="{Binding SelectedQuiz}" Template="{StaticResource SmallButtonTemplate}"></Button>
+            <Button Name="DeleteQuiz" Content="Verwijderen" Command="{Binding DeleteRowCommand}" CommandParameter="{Binding SelectedQuestionnaire}" Template="{StaticResource SmallButtonTemplate}"></Button>
+            <Button Name="EditQuiz" Content="Bewerken" Command="{Binding EditQuestionnaireCommand}" CommandParameter="{Binding SelectedQuestionnaire}" Template="{StaticResource SmallButtonTemplate}"></Button>
             <Button Name="NewQuiz" Content="Nieuwe vragenlijst" Command="{Binding NewQuestionnaireCommand}" Template="{StaticResource SmallButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>

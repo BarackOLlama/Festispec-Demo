@@ -20,10 +20,18 @@ namespace Festispec.ViewModel
         public string Name
         {
             get { return _q.Name; }
-            set
-            {
-                _q.Name = value;
-            }
+            set { _q.Name = value; }
+        }
+
+        public int InspectionId
+        {
+            get { return _q.InspectionId; }
+            set { _q.InspectionId = value; }
+        }
+
+        public string Instructions {
+            get { return _q.Instructions; }
+            set { _q.Instructions = value; }
         }
 
         public ObservableCollection<QuestionVM> QuestionList

@@ -20,8 +20,8 @@ namespace Festispec.ViewModel
         }
         public string QuestionnaireName
         {
-            get { return Questionnaire.Name; }
-            set { Questionnaire.Name = value; CanExecuteChanged(); }
+            get { return _Questionnaire.Name; }
+            set { _Questionnaire.Name = value; }
         }
         public string NewQuestionText { get; set; }
         public string NewAnswerText { get; set; }
@@ -90,6 +90,7 @@ namespace Festispec.ViewModel
         {
             SaveChangesCommand.RaiseCanExecuteChanged();
             AddAnswerCommand.RaiseCanExecuteChanged();
+            RaisePropertyChanged(nameof(SelectedQuestion));
         }
 
         private void CloseAction(Window window)
@@ -116,16 +117,10 @@ namespace Festispec.ViewModel
 
         private bool CanSave(Window args)
         {
-            if (string.IsNullOrEmpty(Questionnaire.Name))
-            {
-                WarningText = "De vragenlijst moet een naam hebben";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
             var questionList = new ObservableCollection<QuestionVM>(Questionnaire.QuestionList);
             if (questionList.Count() < 1)
             {
-                WarningText = "De vragenlijst moet minstens één naam hebben";
+                WarningText = "De vragenlijst moet minstens één vraag hebben";
                 RaisePropertyChanged(nameof(WarningText));
                 return false;
             }
@@ -133,7 +128,7 @@ namespace Festispec.ViewModel
             {
                 if (q.Answers.Count < 2)
                 {
-                    WarningText = "Multiple choice-vragen moeten minstens twee antwoorden hebben";
+                    WarningText = "Multiple choice-vragen moeten minstens twee opties hebben";
                     RaisePropertyChanged(nameof(WarningText));
                     return false;
                 }
@@ -165,9 +160,9 @@ namespace Festispec.ViewModel
             });
 
             _Context.Questions.Add(newQuestion.ToModel);
-
-            Questionnaire.ToModel.QuestionList.Add(newQuestion.ToModel);
+            
             Questionnaire.QuestionList.Add(newQuestion);
+            Questionnaire.ToModel.QuestionList.Add(newQuestion.ToModel);
             RaisePropertyChanged(nameof(Questionnaire));            
 
             NewQuestionText = "";
@@ -181,7 +176,6 @@ namespace Festispec.ViewModel
             var newAnswer = new AnswerVM(new Answer
             {
                 Content = NewAnswerText,
-                Correct = false,
                 Question = SelectedQuestion.ToModel
             });
 

@@ -23,6 +23,16 @@ namespace Festispec.ViewModel
             set { _q.Content = value; }
         }
 
+        public string Options {
+            get { return _q.Options; }
+            set { _q.Options = value; }
+        }
+
+        public string Columns {
+            get { return _q.Columns; }
+            set { _q.Columns = value; }
+        }
+
         public ObservableCollection<AnswerVM> Answers
         {
             get { return new ObservableCollection<AnswerVM>(_q.Answers.Select(a => new AnswerVM(a))); }
